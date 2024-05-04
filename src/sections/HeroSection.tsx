@@ -1,17 +1,22 @@
+import { ClientRouting } from "@/constants/routing";
+import Image from "next/image";
+
 const HeroSection = () => {
   return (
-    <div className="h-screen w-screen bg-primary text-center flex items-center justify-center">
-      <div className="flex flex-col gap-[30px]">
-        <h1 className="text-3xl font-medium">Planet0</h1>
+    <div className="text-center flex items-center justify-center h-screen w-screen relative">
+      <div className="flex flex-col gap-[30px] text-hero z-10 relative">
+        <h1 className="text-5xl font-medium">Planet0</h1>
         <p className="text-[18px]">
           Invest in Transparency, Power a Green Future
         </p>
-        <div>
-          <button className="rounded-full px-[15px] py-[10px] bg-white border border-solid border-black hover:bg-black hover:text-white transition-all">
-            Invest now
-          </button>
-        </div>
       </div>
+      <Image
+        src={`${ClientRouting.imageURL}/bg.png`}
+        alt="logo"
+        className="w-full h-full top-0 left-0 absolute object-cover"
+        width={324}
+        height={174}
+      />
     </div>
   );
 };
