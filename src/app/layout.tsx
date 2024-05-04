@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "@/styles/global.scss";
 import Coin98AdapterProvider from "@/context/adapter";
 import Coin98AdapterModal from "@/components/adapterModal";
-import '@/config/firebase'
+import "@/config/firebase";
 import Header from "@/components/Header";
+import Footer from "@/sections/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center justify-between">
             <Header />
             {children}
+            <Footer />
             <Coin98AdapterModal />
           </main>
         </Coin98AdapterProvider>
