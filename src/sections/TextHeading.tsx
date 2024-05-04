@@ -1,24 +1,22 @@
-import { ClientRouting } from "@/constants/routing";
-import Image from "next/image";
-
-const HeroSection = () => {
+const TextHeading = () => {
   return (
-    <div className="text-center flex items-center justify-center h-screen w-screen relative">
-      <div className="flex flex-col gap-[30px] text-hero z-10 relative">
-        <h1 className="text-5xl font-medium">Planet0</h1>
-        <p className="text-[18px]">
-          Invest in Transparency, Power a Green Future
-        </p>
+    <div className="flex items-center h-screen w-screen relative bg-[#EEF7FF] text-[#333333]">
+      <div className="container">
+        <div className="flex flex-col gap-[40px] text-hero z-10 relative text-[20px] max-w-[950px]">
+          <h3 className="text-5xl font-medium">
+            Investing on Planet0 is easy, powerful, and trusted.
+          </h3>
+          <p className="">
+            Planet0 tackles the critical issue of transparency in green energy
+            investments. It connects individuals passionate about sustainability
+            with green energy projects seeking funding, fostering a win-win
+            situation for both parties.
+          </p>
+          <p>Still have questions? Learn more about how Planet0 works.</p>
+        </div>
       </div>
-      <Image
-        src={`${ClientRouting.imageURL}/bg.png`}
-        alt="logo"
-        className="w-full h-full top-0 left-0 absolute object-cover"
-        width={324}
-        height={174}
-      />
     </div>
   );
 };
 
-export default HeroSection;
+export default TextHeading;
