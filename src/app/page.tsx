@@ -6,6 +6,9 @@ import { ERC20FactoryABI, ERC20TokenABI } from "@/constants/ABI";
 import { useWallet } from "@coin98-com/wallet-adapter-react";
 import { useWalletModal } from "@coin98-com/wallet-adapter-react-ui";
 import Web3, { Transaction } from "web3";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
+import HeroSection from "@/sections/HeroSection";
 
 export default function Home() {
   const { connected, address, sendTransaction } = useWallet();
@@ -73,13 +76,13 @@ export default function Home() {
   };
 
   const approve = async () => {
-    const contractAddress = '0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e'
-      
+    const contractAddress = "0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e";
+
     const to = "0xd292e1316FE04AB997d345c6ad426Eb3426Fc3C6";
     // const spender = "0x6e850e52369206CAd7f8474253c1054E22E623F3";
     // const spender = '0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e'
 
-    const receiver = '0x6e850e52369206CAd7f8474253c1054E22E623F3'
+    const receiver = "0x6e850e52369206CAd7f8474253c1054E22E623F3";
 
     const client = new Web3(
       new Web3.providers.HttpProvider(BNB_TESTNET.rpcUrls[0])
@@ -102,9 +105,9 @@ export default function Home() {
         from: address!,
         to,
         data: data,
-        value: "0x0"
+        value: "0x0",
       };
-      console.log("🚀 ~ approve ~ transaction:", transaction)
+      console.log("🚀 ~ approve ~ transaction:", transaction);
       const result = await sendTransaction(transaction);
       console.log("🚀 ~ approve ~ result:", result);
     }
@@ -116,7 +119,7 @@ export default function Home() {
     const transactionCheckValidTransfer: Transaction = {
       from: address!,
       to: contractAddress,
-      data: checkIsValidTransfer
+      data: checkIsValidTransfer,
     };
     const resultValidTransfer = await sendTransaction(
       transactionCheckValidTransfer
@@ -128,7 +131,7 @@ export default function Home() {
   const onPress = () => {
     // onDeployNewToken()
     // onMintToken()
-    onDeployNewToken()
+    onDeployNewToken();
     // approve();
   };
 
@@ -140,11 +143,10 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <button onClick={onPress}>Mint nft</button>
-        <p onClick={onConnect}>{address || "no wallet"}</p>
-      </div>
-    </main>
+    <div className="w-full max-w-5xl items-center justify-between text-sm lg:flex">
+      <button onClick={onPress}>Mint nft</button>
+      <p onClick={onConnect}>{address || "no wallet"}</p>
+      <HeroSection />
+    </div>
   );
 }
