@@ -2,9 +2,8 @@
 "use client";
 
 import {
-  BLOCKCHAINS_DATA,
   WalletProvider,
-  CHAINS_ID
+  BLOCKCHAINS_DATA
 } from "@coin98-com/wallet-adapter-react";
 import { WalletModalProvider } from "@coin98-com/wallet-adapter-react-ui";
 // @ts-expect-error
@@ -15,7 +14,7 @@ interface ContainerProps {
 }
 
 const Coin98AdapterProvider: React.FC<ContainerProps> = ({ children }) => {
-  const enables = [CHAINS_ID.binanceSmartTest];
+  const enables = [BLOCKCHAINS_DATA.ethereum];
   const wallets = [Coin98WalletAdapter];
   return (
     <WalletProvider wallets={wallets} enables={enables} autoConnect>
