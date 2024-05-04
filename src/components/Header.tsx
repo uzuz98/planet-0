@@ -8,18 +8,20 @@ import { useWallet } from "@coin98-com/wallet-adapter-react";
 import { useWalletModal } from "@coin98-com/wallet-adapter-react-ui";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./header.module.scss";
 import { DropdownMenuDemo } from "./DropdownMenu";
 import { DrawerComp } from "./Drawer";
 import Navigation from "./Navigation";
+import { useBallance } from "@/providers/GlobalState";
 
 const Header = () => {
   const { connected, address } = useWallet();
   const { openWalletModal } = useWalletModal();
   const headerRef = useRef<HTMLElement>(null);
+  const balance = useBallance();
 
-  const { isTop } = useHideDOMItem({
+  useHideDOMItem({
     initCB: () => {
       if (!headerRef?.current?.classList?.contains(s.hide)) return;
       headerRef?.current?.classList.remove(s.hide);
@@ -61,12 +63,22 @@ const Header = () => {
       <Navigation />
       <div>
         <DrawerComp />
-        <Button
-          className="rounded-full hover:text-black border hidden md:block"
-          onClick={onConnect}
-        >
-          {address ? truncateAddress(address, 5) : "Connect Wallet"}
-        </Button>
+        <div className="flex gap-24">
+          <div></div>
+          <Button
+            className="rounded-full hover:text-black border hidden md:block"
+            onClick={onConnect}
+          >
+            {address ? (
+              <div className="flex gap-[10px] items-center">
+                {truncateAddress(address, 5)}
+                <span>{balance} BNB</span>
+              </div>
+            ) : (
+              "Connect Wallet"
+            )}
+          </Button>
+        </div>
       </div>
     </header>
   );

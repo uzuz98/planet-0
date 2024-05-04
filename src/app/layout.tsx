@@ -6,6 +6,7 @@ import Coin98AdapterModal from "@/components/adapterModal";
 import "@/config/firebase";
 import Header from "@/components/Header";
 import Footer from "@/sections/Footer";
+import GlobalStateProvider from "@/providers/GlobalState";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,12 +26,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Coin98AdapterProvider>
-          <main className="flex min-h-screen flex-col items-center justify-between">
-            <Header />
-            {children}
-            <Footer />
+          <GlobalStateProvider>
+            <main className="flex min-h-screen flex-col items-center justify-between">
+              <Header />
+              {children}
+              <Footer />
+            </main>
             <Coin98AdapterModal />
-          </main>
+          </GlobalStateProvider>
         </Coin98AdapterProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
 import { BNB_TESTNET } from '@/components/adapterModal'
-import { ERC20FactoryABI, ERC20TokenABI } from '@/constants'
+import { ERC20TokenABI } from '@/constants'
 import { convertWeiToBalance } from '@/lib/converter'
 import { Product } from '@/types'
 import Web3, { Contract } from 'web3'
@@ -11,12 +11,11 @@ export class WalletService {
   client?: Web3
   contractCached = new Map<string, Contract<typeof ERC20TokenABI>>()
 
-  constructor (address: string) {
+  constructor () {
     if(WalletService.Instance) {
       return WalletService.Instance
     }
     WalletService.Instance = this
-    this.address = address
     this.client = new Web3(
       new Web3.providers.HttpProvider(BNB_TESTNET.rpcUrls[0])
     );
@@ -29,7 +28,8 @@ export class WalletService {
     try {
       if(this.address) {
         const rawBalance = await this.client?.eth.getBalance(this.address)
-        const balance = convertWeiToBalance(String(rawBalance), WalletService.DECIMAL)
+        // @ts-ignore
+        const balance = convertWeiToBalance(rawBalance, WalletService.DECIMAL)
         return {
           rawBalance: String(rawBalance),
           balance
@@ -42,7 +42,7 @@ export class WalletService {
     }
   }
 
-  changeWallet(address: string): WalletService {
+  updateWalletAddress(address: string): WalletService {
     this.address = address
     return this
   }
@@ -58,7 +58,7 @@ export class WalletService {
             const contract = await this.getContract(product.contractAddress)
   
             const rawBalance = await contract?.methods.balanceOf(this.address).call()
-            const balance = convertWeiToBalance(String(rawBalance), product.decimal)
+            const balance = convertWeiToBalance(String(Number(rawBalance)), product.decimal)
   
             return {
               balance: String(balance),
