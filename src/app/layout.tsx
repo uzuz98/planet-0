@@ -7,6 +7,7 @@ import "@/config/firebase";
 import Header from "@/components/Header";
 import Footer from "@/sections/Footer";
 import GlobalStateProvider from "@/providers/GlobalState";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
               <Header />
               {children}
               <Footer />
+              <Toaster />
             </main>
             <Coin98AdapterModal />
           </GlobalStateProvider>

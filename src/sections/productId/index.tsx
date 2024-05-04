@@ -11,6 +11,7 @@ import { convertBalanceToWei } from "@/lib/converter";
 import { PlanetService } from "@/services/planet";
 import Web3 from "web3";
 import { ERC20TokenABI } from "@/constants/ABI";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Wrapper = (props: { product: Product }) => {
   const [forToken, setFORToken] = useState("0");
@@ -25,27 +26,31 @@ export const Wrapper = (props: { product: Product }) => {
     } & Product
   >();
 
+  const { toast } = useToast();
+
   const onChangeInput = (e: any) => {
     setValue(e.target.value);
   };
 
-  useEffect(() => {
-    (async () => {
-      if (address) {
-        const balanceData = await WalletService.Instance.updateWalletAddress(
-          address
-        ).getFORBalance();
-        const totalToken = await WalletService.Instance.getTokenBalance([
-          product,
-        ]);
+  const refetchToken = async () => {
+    if (address) {
+      const balanceData = await WalletService.Instance.updateWalletAddress(
+        address
+      ).getFORBalance();
+      const totalToken = await WalletService.Instance.getTokenBalance([
+        product,
+      ]);
 
-        if (totalToken && totalToken[0]) {
-          setProductToken(totalToken[0]);
-        }
-
-        setFORToken(balanceData.balance);
+      if (totalToken && totalToken[0]) {
+        setProductToken(totalToken[0]);
       }
-    })();
+
+      setFORToken(balanceData.balance);
+    }
+  }
+
+  useEffect(() => {
+    refetchToken();
   }, [address]);
 
   const checkValidFOR = useMemo(() => {
@@ -71,8 +76,18 @@ export const Wrapper = (props: { product: Product }) => {
           rawAmount: convertBalanceToWei(value, Number(product.decimal)),
           contractAddress: product.contractAddress,
         });
+        toast({
+          title: "Sucess To Buy FOR Token",
+          className: "text-green-500",
+        });
+        refetchToken()
       }
-    } catch (error) {}
+    } catch (error) {
+      toast({
+        title: "Failed To Buy FOR Token",
+        className: "text-red-500",
+      });
+    }
     setIsLoading(false);
   };
 
@@ -95,7 +110,8 @@ export const Wrapper = (props: { product: Product }) => {
               <div>
                 <p className="text-bold text-xl">{product.name}</p>
                 <p className="text-[#333333] opacity-[80%]">
-                  Total {product.symbol} available: {totalProduct?.balance} {product.symbol}
+                  Total {product.symbol} available: {totalProduct?.balance}{" "}
+                  {product.symbol}
                 </p>
               </div>
             </div>
