@@ -1,0 +1,7 @@
+.header {
+  &.hide {
+    @apply -translate-y-[100px] duration-700;
+  }
+
+  @apply h-[60px] sm:h-[80px];
+}

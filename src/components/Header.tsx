@@ -1,15 +1,35 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ClientRouting } from "@/constants/routing";
+import useHideDOMItem from "@/hook/useHideDOMItem";
+import { cn } from "@/lib/utils";
 import truncateAddress from "@/utils/truncateAddress";
 import { useWallet } from "@coin98-com/wallet-adapter-react";
 import { useWalletModal } from "@coin98-com/wallet-adapter-react-ui";
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
+import s from "./header.module.scss";
 
 const Header = () => {
-  const { connected, address, sendTransaction } = useWallet();
+  const { connected, address } = useWallet();
   const { openWalletModal } = useWalletModal();
+  const headerRef = useRef<HTMLElement>(null);
+
+  const { isTop } = useHideDOMItem({
+    initCB: () => {
+      if (!headerRef?.current?.classList?.contains(s.hide)) return;
+      headerRef?.current?.classList.remove(s.hide);
+    },
+    scrollDownCB: () => {
+      if (headerRef?.current?.classList?.contains(s.hide)) return;
+      headerRef?.current?.classList.add(s.hide);
+    },
+    scrollUpCB: () => {
+      if (!headerRef?.current?.classList?.contains(s.hide)) return;
+      headerRef?.current?.classList.remove(s.hide);
+    },
+  });
 
   const onConnect = async () => {
     if (!connected) {
@@ -17,7 +37,13 @@ const Header = () => {
     }
   };
   return (
-    <header className="w-full py-[20px] px-[60px] flex justify-between z-10 fixed top-0 left-0 container items-center">
+    <header
+      className={cn(
+        "w-full py-[5px] px-[60px] transition-all flex justify-between z-50 fixed top-[10px] left-1/2 -translate-x-1/2 container items-center bg-white rounded-full shadow-md",
+        s.header
+      )}
+      ref={headerRef}
+    >
       <div className="max-w-[120px] md:max-w-[150px]">
         <a aria-label="Logo" href="/">
           <Image
