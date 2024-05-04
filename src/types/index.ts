@@ -4,4 +4,5 @@ export interface Product {
   decimal: string
   contractAddress: string
   description: string
+  id: string
 }

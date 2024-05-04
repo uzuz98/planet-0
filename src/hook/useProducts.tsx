@@ -12,12 +12,13 @@ export default function useProducts() {
       const q = query(products, limit(4));
       const productDocs = await getDocs(q);
       const productList = productDocs.docs.map((doc) =>
-        doc.data()
+        ({
+          ...doc.data(),
+          id: doc.id
+        })
       ) as Product[];
       setProducts(productList);
-    } catch (error) {
-      console.log("🩲 🩲 => onPress => error:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
