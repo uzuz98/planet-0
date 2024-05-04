@@ -2,6 +2,7 @@ import { db } from "@/config";
 import React from "react"
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Product } from "@/types";
+import { Wrapper } from "@/sections/productId";
 
 export const revalidate = 1
 
@@ -13,7 +14,7 @@ const Page = async ({params}: {params: {id: string}}) => {
   const product: Product = productList[0]
   
   return (
-    <div>{product?.name}</div>
+    <Wrapper product={product}/>
   )
 }
 
