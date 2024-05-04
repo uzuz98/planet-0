@@ -3,15 +3,23 @@ import React, { useState } from "react"
 import { Product } from "@/types"
 import Image from "next/image"
 import { ClientRouting } from "@/constants/routing"
+import { Button } from "@/components/ui/button"
+import {Loader2} from 'lucide-react'
+import { WalletService } from "@/services"
 
 export const Wrapper = (props: {
   product: Product
 }) => {
   const { product } = props
   const [value, setValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const onChangeInput = (e: any) => {
     setValue(e.target.value)
+  }
+
+  const onMintToken = async () => {
+
   }
 
   return (
@@ -53,9 +61,14 @@ export const Wrapper = (props: {
             <input onChange={onChangeInput} className="bg-white outline-none rounded-xl p-2 w-full focus-visible:border-0 focus-visible:border-none"/>
             </div>
             <div className="mt-2 flex flex-end">
-              <button className="bg-black ml-auto rounded-full py-1 px-3 text-white text-base font-bold">
+
+              <Button
+                className="hover:text-black border-2 mt-2 rounded-full py-1 px-4 w-full text-white text-base font-bold"
+                onClick={onMintToken}
+                disabled={isLoading}>
+                {isLoading && <Loader2 className="w-4 animate-spin"/>}
                 BUY
-              </button>
+              </Button>
             </div>
           </div>
           <div className="bg-[#D9F4D53D] p-4 pb-8 mt-2 rounded-2xl">
