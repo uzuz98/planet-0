@@ -7,16 +7,18 @@ import { useWallet } from "@coin98-com/wallet-adapter-react";
 import { useWalletModal } from "@coin98-com/wallet-adapter-react-ui";
 import Web3, { Transaction } from "web3";
 
+const DEFAULT_AMOUNT = 1000000000
+
 export default function Home() {
   const { connected, address, sendTransaction } = useWallet();
   const { openWalletModal } = useWalletModal();
 
   const onDeployNewToken = async () => {
-    const to = "0x095c7670D1aFF76F350ece3F12C91cDc6362b473";
+    const to = process.env.NEXT_PUBLIC_CONTRACT_FACTORY
 
     const params = {
-      name: "Test Project Name B",
-      symbol: "FoTPN",
+      name: "Test Project Name A",
+      symbol: "FoTPN A",
       decimals: "18",
       initialSupply: 100000000000,
     };
@@ -50,7 +52,8 @@ export default function Home() {
   };
 
   const onMintToken = async () => {
-    const to = "0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e";
+    const to = process.env.NEXT_PUBLIC_TOKEN_2
+
     const client = new Web3(
       new Web3.providers.HttpProvider(BNB_TESTNET.rpcUrls[0])
     );
@@ -59,27 +62,24 @@ export default function Home() {
       to
     );
     const data = contract.methods
-      .transfer("0x6e850e52369206CAd7f8474253c1054E22E623F3", 10000000)
+      .mint(address, DEFAULT_AMOUNT)
       .encodeABI();
 
     const transaction = {
       from: address!,
       to,
       data: data,
-      value: "0x0",
     };
     const result = await sendTransaction(transaction);
     console.log("🩲 🩲 => onMintToken => result:", result);
   };
 
   const approve = async () => {
-    const contractAddress = '0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e'
-      
-    const to = "0xd292e1316FE04AB997d345c6ad426Eb3426Fc3C6";
-    // const spender = "0x6e850e52369206CAd7f8474253c1054E22E623F3";
-    // const spender = '0x7c77F495f279EdD98B4a132ef363c6F2F4a3a16e'
+    const amountApprove = 300
 
-    const receiver = '0x6e850e52369206CAd7f8474253c1054E22E623F3'
+    const contractAddress = process.env.NEXT_PUBLIC_TOKEN_1
+
+    const receiver = '0x3fffAE020664f9724Af1293d79816d0182288563'
 
     const client = new Web3(
       new Web3.providers.HttpProvider(BNB_TESTNET.rpcUrls[0])
@@ -95,41 +95,60 @@ export default function Home() {
     const allowance = await contract.methods
       .allowance(address, receiver)
       .call();
-    console.log("🚀 ~ approve ~ allowance:", Number(allowance));
-    if (Number(allowance) < 300) {
-      const data = contract.methods.approve(receiver, UNLIMIT_HEX).encodeABI();
+    if (Number(allowance) < amountApprove) {
+      const data = contract.methods.approve(receiver, amountApprove).encodeABI();
       const transaction: Transaction = {
         from: address!,
-        to,
+        to: contractAddress,
         data: data,
         value: "0x0"
       };
-      console.log("🚀 ~ approve ~ transaction:", transaction)
       const result = await sendTransaction(transaction);
-      console.log("🚀 ~ approve ~ result:", result);
+      console.log("🩲 🩲 => approve => result:", result)
     }
+  };
 
-    const checkIsValidTransfer = contract.methods
-      .transferFrom(address, receiver, 300)
+  const transferTokenByAnotherAddress = async () => {
+    const amountApprove = 200
+    const contractAddress1 = process.env.NEXT_PUBLIC_TOKEN_1
+    // const contractAddress = process.env.NEXT_PUBLIC_TOKEN_2
+
+    const address1 = '0x6e850e52369206cad7f8474253c1054e22e623f3'
+    // const receiver1 = '0x3fffAE020664f9724Af1293d79816d0182288563'
+
+    const client = new Web3(
+      new Web3.providers.HttpProvider(BNB_TESTNET.rpcUrls[0])
+    );
+    
+    const contract1 = new client.eth.Contract<typeof ERC20TokenABI>(
+      ERC20TokenABI,
+      contractAddress1
+    );
+    const allowance = await contract1.methods
+      .allowance(address1, address)
+      .call();
+    console.log("🩲 🩲 => transferTokenByAnotherAddress => allowance:", allowance)
+
+    const checkIsValidTransfer = contract1.methods
+      .transferFrom(address1, address, amountApprove)
       .encodeABI();
 
     const transactionCheckValidTransfer: Transaction = {
       from: address!,
-      to: contractAddress,
+      to: contractAddress1,
       data: checkIsValidTransfer
     };
     const resultValidTransfer = await sendTransaction(
       transactionCheckValidTransfer
     );
 
-    console.log("🚀 ~ approve ~ resultValidTransfer:", resultValidTransfer);
-    console.log("🚀 ~ approve ~ checkIsValidTransfer:", checkIsValidTransfer);
-  };
+  }
+
   const onPress = () => {
     // onDeployNewToken()
     // onMintToken()
-    onDeployNewToken()
     // approve();
+    transferTokenByAnotherAddress()
   };
 
   const onConnect = async () => {
