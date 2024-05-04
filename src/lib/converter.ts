@@ -1,5 +1,4 @@
-// @ts-expect-error
-import bigDecimal = require("js-big-decimal");
+import bigDecimal from "js-big-decimal";
 import numeral from "numbro";
 
 // Converter
@@ -97,9 +96,7 @@ export const convertWeiToBalance = (
 
   try {
     const decimalFormat = parseFloat(iDecimal.toString());
-    // @ts-expect-error
     const multiplyNum = new bigDecimal(Math.pow(10, decimalFormat));
-    // @ts-expect-error
     const convertValue = new bigDecimal(String(strValue));
     const result = convertValue.divide(multiplyNum, decimalFormat);
     // @ts-expect-error
@@ -122,14 +119,12 @@ export const calculateBigNumber = (
   try {
     if (arrValue) {
       const sumAmount = arrValue.reduce(
-        // @ts-expect-error
         (preResult: bigDecimal, currentValue, currentIndex) =>
           currentIndex
-            ? // @ts-expect-error
+            ?
               preResult[method](new bigDecimal(currentValue))
-            : // @ts-expect-error
+            :
               new bigDecimal(currentValue),
-        // @ts-expect-error
         new bigDecimal(0)
       );
       return sumAmount.getValue();

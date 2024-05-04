@@ -29,7 +29,9 @@ export class WalletService {
       if(this.address) {
         const rawBalance = await this.client?.eth.getBalance(this.address)
         // @ts-ignore
-        const balance = convertWeiToBalance(rawBalance, WalletService.DECIMAL)
+        const balance = convertWeiToBalance(String(rawBalance), WalletService.DECIMAL, {
+          isFormat: true
+        })
         return {
           rawBalance: String(rawBalance),
           balance
@@ -58,7 +60,9 @@ export class WalletService {
             const contract = await this.getContract(product.contractAddress)
   
             const rawBalance = await contract?.methods.balanceOf(this.address).call()
-            const balance = convertWeiToBalance(String(Number(rawBalance)), product.decimal)
+            const balance = convertWeiToBalance(String(Number(rawBalance)), product.decimal, {
+              isFormat: true
+            })
   
             return {
               balance: String(balance),
