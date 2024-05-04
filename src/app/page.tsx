@@ -1,11 +1,13 @@
 "use client";
 
 import { BNB_TESTNET } from "@/components/adapterModal";
+import { db } from "@/config";
 import { UNLIMIT_HEX } from "@/constants";
 import { ERC20FactoryABI, ERC20TokenABI } from "@/constants/ABI";
 import { useWallet } from "@coin98-com/wallet-adapter-react";
 import { useWalletModal } from "@coin98-com/wallet-adapter-react-ui";
 import Web3, { Transaction } from "web3";
+import { collection, getDocs, query } from "firebase/firestore"
 
 export default function Home() {
   const { connected, address, sendTransaction } = useWallet();
@@ -125,11 +127,22 @@ export default function Home() {
     console.log("🚀 ~ approve ~ resultValidTransfer:", resultValidTransfer);
     console.log("🚀 ~ approve ~ checkIsValidTransfer:", checkIsValidTransfer);
   };
-  const onPress = () => {
-    // onDeployNewToken()
-    // onMintToken()
-    onDeployNewToken()
-    // approve();
+  const onPress = async () => {
+    try {
+      // onDeployNewToken()
+      // onMintToken()
+      // onDeployNewToken()
+      // approve();
+
+      const products = collection(db, 'products')
+      const q = query(products);
+      console.log("🩲 🩲 => onPress => products:", products)
+      const productDocs = await getDocs(q)
+      const cityList = productDocs.docs.map(doc => doc.data());
+      console.log("🩲 🩲 => onPress => cityList:", cityList)
+    } catch (error) {
+      console.log("🩲 🩲 => onPress => error:", error)
+    }
   };
 
   const onConnect = async () => {
