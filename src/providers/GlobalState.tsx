@@ -39,7 +39,6 @@ export const useBallance = () => {
 
 const GlobalStateProvider: FC<PropsWithChildren> = ({ children }) => {
   const [balance, setBallance] = useState("0");
-  console.log("🚀 ~ balance:", balance)
   const { address, connected } = useWallet();
 
   const getBallance = async () => {
@@ -48,7 +47,6 @@ const GlobalStateProvider: FC<PropsWithChildren> = ({ children }) => {
       const balanceData = await wallet
         .updateWalletAddress(address)
         .getBalance();
-      console.log("🚀 ~ getBallance ~ balanceData:", balanceData)
       setBallance(balanceData.balance);
     }
   };

@@ -42,7 +42,7 @@ const Projects = () => {
         })}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-[24px] mt-[30px]">
-        {products.slice(1, 3).map((product) => {
+        {products.slice(1, 4).map((product) => {
           return (
             <div className="relative h-full" key={product.id}>
               <div className=" w-full h-full relative min-h-[200px]">
