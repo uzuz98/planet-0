@@ -1,4 +1,4 @@
-@import '@coin98-com/wallet-adapter-react-ui/styles.css';
+@import "@coin98-com/wallet-adapter-react-ui/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: ;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -67,6 +67,7 @@
   }
 }
 
+
 @layer base {
   * {
     @apply border-border;
@@ -75,3 +76,5 @@
     @apply bg-background text-foreground;
   }
 }
+
+@import 'reset';
