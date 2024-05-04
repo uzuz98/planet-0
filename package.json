@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coin98-com/wallet-adapter-coin98": "^0.0.66",
+    "@coin98-com/wallet-adapter-react": "^0.0.66",
+    "@coin98-com/wallet-adapter-react-ui": "^0.0.66",
     "@headlessui/react": "^1.7.19",
     "@uidotdev/usehooks": "^2.4.1",
     "class-variance-authority": "^0.7.0",

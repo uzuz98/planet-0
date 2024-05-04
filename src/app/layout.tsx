@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Coin98AdapterProvider from "@/context/adapter";
+import Coin98AdapterModal from "@/components/adapterModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Coin98AdapterProvider>
+          {children}
+          <Coin98AdapterModal />
+        </Coin98AdapterProvider>
+      </body>
     </html>
   );
 }
