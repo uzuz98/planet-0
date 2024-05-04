@@ -10,6 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import s from "./header.module.scss";
+import { DropdownMenuDemo } from "./DropdownMenu";
+import { DrawerComp } from "./Drawer";
+import Navigation from "./Navigation";
 
 const Header = () => {
   const { connected, address } = useWallet();
@@ -39,7 +42,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "w-full py-[5px] px-[60px] transition-all flex justify-between z-50 fixed top-[10px] left-1/2 -translate-x-1/2 container items-center bg-white rounded-full shadow-md",
+        "xl:w-full w-[90%] py-[5px] sm:px-[60px] transition-all flex justify-between z-50 fixed top-[10px] left-1/2 -translate-x-1/2 container items-center bg-white rounded-full shadow-md",
         s.header
       )}
       ref={headerRef}
@@ -55,22 +58,16 @@ const Header = () => {
           />
         </a>
       </div>
-      <nav
-        aria-label="primary"
-        className="px-fluid-base 4xl:px-0 my-auto relative z-10"
-      >
-        <ul className="flex gap-[40px]">
-          <Link href="/">Docs</Link>
-          <Link href="/">Project</Link>
-          <Link href="/">Dashboard</Link>
-        </ul>
-      </nav>
-      <Button
-        className="rounded-full hover:text-black border"
-        onClick={onConnect}
-      >
-        {address ? truncateAddress(address, 5) : "Connect Wallet"}
-      </Button>
+      <Navigation />
+      <div>
+        <DrawerComp />
+        <Button
+          className="rounded-full hover:text-black border hidden md:block"
+          onClick={onConnect}
+        >
+          {address ? truncateAddress(address, 5) : "Connect Wallet"}
+        </Button>
+      </div>
     </header>
   );
 };

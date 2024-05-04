@@ -12,12 +12,12 @@ const Projects = () => {
       <div className="">
         {products.slice(0, 1).map((product) => {
           return (
-            <div className="flex h-full min-h-[315px]">
+            <div className="flex flex-col sm:flex-row h-full min-h-[315px] rounded-xl overflow-hidden" key={product.id}>
               <div className="flex-1 relative">
                 <Image
                   src={`${ClientRouting.imageURL}/bg.png`}
                   alt="logo"
-                  className="w-full h-full top-0 left-0 absolute object-cover"
+                  className="w-full h-full top-0 left-0 absolute object-cover min-h-[315px]"
                   width={324}
                   height={174}
                 />
@@ -44,7 +44,7 @@ const Projects = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-[24px] mt-[30px]">
         {products.slice(1, 3).map((product) => {
           return (
-            <div className="relative h-full">
+            <div className="relative h-full" key={product.id}>
               <div className=" w-full h-full relative min-h-[200px]">
                 <Image
                   src={`${ClientRouting.imageURL}/bg.png`}

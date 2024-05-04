@@ -44,7 +44,7 @@ const data = [
 
 const Footer = () => {
   return (
-    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[24px] container py-[50px]">
+    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 container py-[50px]">
       <div>
         <Link aria-label="Logo" href="/">
           <Image
@@ -62,7 +62,7 @@ const Footer = () => {
             <div className="font-medium">{menu.title}</div>
             {menu.subItems.map((item) => {
               return (
-                <div>
+                <div key={Math.random()}>
                   <Link href={item.link}>{item.text}</Link>
                 </div>
               );

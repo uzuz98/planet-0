@@ -31,6 +31,7 @@ export const BNB_TESTNET = {
 const Coin98AdapterModal = () => {
   const defaultChains = [BNB_TESTNET]; // multi-chain
   // const defaultChains = [tomo,ether]; // single-chainds
+  // @ts-ignore
   return <WalletModalC98 isC98Theme enableChains={defaultChains} />;
 };
 
