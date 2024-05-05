@@ -15,7 +15,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 export const Wrapper = (props: { product: Product }) => {
   const [forToken, setFORToken] = useState("0");
-  const { address, sendTransaction } = useWallet();
+  const { address, sendTransaction, connected } = useWallet();
   const { product } = props;
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ export const Wrapper = (props: { product: Product }) => {
 
       setFORToken(balanceData.balance);
     }
-  }
+  };
 
   useEffect(() => {
     refetchToken();
@@ -80,7 +80,7 @@ export const Wrapper = (props: { product: Product }) => {
           title: "Sucess To Buy FOR Token",
           className: "text-green-500",
         });
-        refetchToken()
+        refetchToken();
       }
     } catch (error) {
       toast({
@@ -90,6 +90,10 @@ export const Wrapper = (props: { product: Product }) => {
     }
     setIsLoading(false);
   };
+
+  const shouldDisableButton = useMemo(() => {
+    return isLoading || checkValidFOR || !connected;
+  }, [isLoading, checkValidFOR, connected]);
 
   return (
     <div className="pt-24">
@@ -144,7 +148,7 @@ export const Wrapper = (props: { product: Product }) => {
               <Button
                 className="hover:text-black border-2 mt-2 rounded-full py-1 px-4 w-full text-white text-base font-bold"
                 onClick={onMintToken}
-                disabled={isLoading || checkValidFOR}
+                disabled={shouldDisableButton}
               >
                 {isLoading && <Loader2 className="w-4 animate-spin" />}
                 BUY
