@@ -90,9 +90,9 @@ export function DrawerComp() {
           }
         >
           <ul className="flex gap-[40px] flex-col">
-            <Link href="/">Docs</Link>
-            <Link href="/">Project</Link>
-            <Link href="/">Dashboard</Link>
+            <a href="https://planet0.gitbook.io/untitled" target="_blank">
+              Docs
+            </a>
           </ul>
           <Button
             className="rounded-full hover:text-black border mt-6"

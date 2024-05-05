@@ -15,9 +15,9 @@ const Navigation = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(
         )}
       >
         <ul className="flex gap-[40px]">
-          <Link href="/">Docs</Link>
-          <Link href="/">Project</Link>
-          <Link href="/">Dashboard</Link>
+          <a href={"https://planet0.gitbook.io/untitled"} target="_blank">
+            Docs
+          </a>
         </ul>
       </nav>
     );
