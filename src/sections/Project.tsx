@@ -12,10 +12,13 @@ const Projects = () => {
       <div className="">
         {products.slice(0, 1).map((product) => {
           return (
-            <div className="flex flex-col sm:flex-row h-full min-h-[315px] rounded-xl overflow-hidden" key={product.id}>
+            <div
+              className="flex flex-col sm:flex-row h-full min-h-[315px] rounded-xl overflow-hidden"
+              key={product.id}
+            >
               <div className="flex-1 relative">
                 <Image
-                  src={`${ClientRouting.imageURL}/bg.png`}
+                  src={`${ClientRouting.imageURL}/image.png`}
                   alt="logo"
                   className="w-full h-full top-0 left-0 absolute object-cover min-h-[315px]"
                   width={324}
@@ -25,14 +28,17 @@ const Projects = () => {
               <div className="flex-1 pl-[25px] py-[64px] text-[24px] flex flex-col justify-between bg-[#F8F8F8]">
                 <div>
                   <h3>{product.name}</h3>
-                  <p className="text-[18px] text-[#767676] mt-4">
-                    {product.description}
-                  </p>
+                  <div
+                    className="text-[18px] text-[#767676] mt-4"
+                    dangerouslySetInnerHTML={{
+                      __html: product.description,
+                    }}
+                  />
                 </div>
 
                 <Link
                   href={`/product/${product.id}`}
-                  className="mt-auto flex gap-[10px] items-center"
+                  className="mt-[10px] flex gap-[10px] items-center"
                 >
                   Learn more <RightIcon />
                 </Link>
@@ -47,7 +53,7 @@ const Projects = () => {
             <div className="relative h-full" key={product.id}>
               <div className=" w-full h-full relative min-h-[200px]">
                 <Image
-                  src={`${ClientRouting.imageURL}/bg.png`}
+                  src={`${ClientRouting.imageURL}/image.png`}
                   alt="logo"
                   className="w-full h-full top-0 left-0 absolute object-cover rounded-t-xl"
                   width={324}
@@ -58,7 +64,7 @@ const Projects = () => {
                 <h3>{product.name}</h3>
                 <Link
                   href={`/product/${product.id}`}
-                  className="flex gap-[10px] items-center"
+                  className="flex gap-[10px] mt-[10px] items-center"
                 >
                   Learn more <RightIcon />
                 </Link>

@@ -105,7 +105,7 @@ export const Wrapper = (props: { product: Product }) => {
             <div className="grid bg-white grid-cols-2 gap-x-4 mb-4 p-4 rounded-2xl">
               <div className="">
                 <Image
-                  src={`${ClientRouting.imageURL}/bg.png`}
+                  src={`${ClientRouting.imageURL}/image.png`}
                   alt="logo"
                   width={324}
                   height={174}
@@ -127,7 +127,12 @@ export const Wrapper = (props: { product: Product }) => {
           </div>
           <div className="bg-[#D9F4D53D] p-4 rounded-2xl text-[#333333]">
             <p className="mb-2 text-xl font-bold">{product.name}</p>
-            <p>{product.description}</p>
+            <div
+              className="text-[18px] text-[#767676] mt-4"
+              dangerouslySetInnerHTML={{
+                __html: product.description,
+              }}
+            />
           </div>
         </div>
         <div className="flex-1 md:w-[300px]">
