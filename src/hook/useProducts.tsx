@@ -17,7 +17,7 @@ export default function useProducts() {
           id: doc.id
         })
       ) as Product[];
-      setProducts(productList);
+      setProducts(productList.reverse());
     } catch (error) {}
   };
 
